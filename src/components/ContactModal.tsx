@@ -169,14 +169,15 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                       className="w-full bg-[#1A1C22] border border-[#2B2F3B] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#B600A8] transition-colors"
                     >
+                      <option value="Launch">Launch Package (₹9,999 – ₹14,999)</option>
+                      <option value="Growth">Growth Package (₹19,999 – ₹34,999)</option>
+                      <option value="Scale">Scale Package (₹39,999+)</option>
+                      <option value="Consultancy">Consultancy (₹999 / session)</option>
                       <option value="3D Modeling & CGI">3D Modeling & CGI</option>
                       <option value="Photorealistic Rendering">Photorealistic Rendering</option>
                       <option value="Motion Design & Dynamic CGI">Motion Design & Dynamic CGI</option>
                       <option value="Web Design & Development">Web Design & Development</option>
                       <option value="AI Automation & Workflows">AI Automation & Workflows</option>
-                      <option value="3D & Motion Sprint ($2,400)">3D & Motion Sprint ($2,400)</option>
-                      <option value="Brand + Web Experience ($5,800)">Brand + Web Experience ($5,800)</option>
-                      <option value="Web, 3D & AI Ecosystem ($9,500+)">Web, 3D & AI Ecosystem ($9,500+)</option>
                     </select>
                   </div>
 

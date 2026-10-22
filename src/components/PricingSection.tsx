@@ -1,59 +1,90 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FadeIn } from './FadeIn';
-import { Check, Sparkles, Clock, ArrowRight } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 interface PricingSectionProps {
   onSelectPlan: (planName: string) => void;
 }
 
-const PRICING_PLANS = [
+interface PlanItem {
+  id: string;
+  name: string;
+  price: string;
+  period?: string;
+  tagline: string;
+  isPopular?: boolean;
+  features: string[];
+}
+
+const PRICING_PLANS: PlanItem[] = [
   {
-    id: '3d-motion',
-    name: '3D & Motion Sprint',
-    tagline: 'Ideal for product launches, social ads, and hero visual assets.',
-    price: '$2,400',
-    duration: '1 - 2 weeks delivery',
-    highlight: false,
-    deliverables: [
-      'Up to 3 high-detail 3D models & product renders',
-      'Cinema-grade lighting, textures & 4K exports',
-      '1 kinetic 3D motion video (15-30s) for socials/hero',
-      'All raw 3D scene files + transparent PNG renders',
-      '2 revision rounds with Jack (3D Director)',
+    id: 'launch',
+    name: 'Launch',
+    price: '₹9,999 – ₹14,999',
+    tagline: 'Perfect for businesses starting online with a premium digital presence.',
+    isPopular: false,
+    features: [
+      'Premium landing page website',
+      'Mobile responsive design',
+      'WhatsApp & contact integration',
+      'Google Maps setup',
+      'Basic branding setup',
+      'Social creatives',
+      'SEO + speed optimization',
+      'Strategy call',
     ],
   },
   {
-    id: 'full-scale',
-    name: 'Brand + Web Experience',
-    tagline: 'Our flagship service: full visual identity and responsive web build.',
-    price: '$5,800',
-    duration: '2 - 3 weeks delivery',
-    highlight: true,
-    badge: 'Founder Favorite',
-    deliverables: [
-      'Custom 3D hero assets & interactive web animations',
-      'High-converting, responsive website (React/Next.js)',
-      'Cohesive visual branding, logo system & typography',
-      'SEO optimization, lightning 95+ PageSpeed score',
-      'Lead capture form & CRM / email integration',
-      'Direct collaboration with both Jack & Ishant',
+    id: 'growth',
+    name: 'Growth',
+    price: '₹19,999 – ₹34,999',
+    tagline: 'Best for businesses ready to attract more customers and build trust online.',
+    isPopular: true,
+    features: [
+      'Everything in Launch',
+      'Multi-page premium website',
+      'Custom UI/UX design',
+      'Social media branding kit',
+      'Reel / promo video',
+      'Content planning',
+      'Analytics setup',
+      'Lead capture automation',
     ],
   },
   {
-    id: 'ai-enterprise',
-    name: 'Web, 3D & AI Ecosystem',
-    tagline: 'Complete digital transformation with custom automation pipelines.',
-    price: '$9,500+',
-    duration: '3 - 5 weeks delivery',
-    highlight: false,
-    deliverables: [
-      'End-to-end 3D visual system + interactive 3D WebGL',
-      'Full web platform or web application development',
-      'Custom AI automations (lead qualifying, chatbots, CRM)',
-      'Complete social & shoot editing toolkit',
-      'Dedicated Slack channel with both founders',
-      '30 days post-launch support & performance tuning',
+    id: 'scale',
+    name: 'Scale',
+    price: '₹39,999+',
+    tagline: 'Complete digital presence with advanced branding and growth systems.',
+    isPopular: false,
+    features: [
+      'Everything in Growth',
+      'Custom website / web app',
+      'Premium branding upgrades',
+      'Professional content shoot',
+      'AI automation setup',
+      'Conversion strategy',
+      'Priority support',
+      'Dedicated guidance',
+    ],
+  },
+  {
+    id: 'consultancy',
+    name: 'Consultancy',
+    price: '₹999',
+    period: '/ session',
+    tagline: 'A focused strategy session for businesses needing expert guidance.',
+    isPopular: false,
+    features: [
+      'Brand audit',
+      'Website review',
+      'Growth roadmap',
+      'Content strategy ideas',
+      'Lead generation suggestions',
+      'AI & automation ideas',
+      '45–60 min session',
+      'Action plan after call',
     ],
   },
 ];
@@ -62,89 +93,96 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
   return (
     <section
       id="price"
-      className="bg-[#0C0C0C] py-24 px-5 sm:px-8 md:px-10 border-t border-[#1C1F26] relative z-30 select-none"
+      className="bg-[#0C0C0C] py-20 sm:py-28 px-4 sm:px-6 md:px-8 border-t border-[#1C1F26] relative z-30 select-none"
     >
-      <div className="max-w-6xl mx-auto">
-        <FadeIn y={30} className="text-center mb-16">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#B600A8] px-3.5 py-1 rounded-full bg-[#1A1124] border border-[#3E1650] inline-block mb-4">
-            Transparent Investment
-          </span>
-          <h2 className="hero-heading font-black uppercase text-3xl sm:text-5xl md:text-6xl tracking-tight leading-tight">
-            Clear Pricing. Zero Agency Bloat.
+      <div className="max-w-7xl mx-auto">
+        {/* Header from reference screenshot */}
+        <FadeIn y={30} className="text-center mb-14 sm:mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight mb-3">
+            Simple &amp; <span className="text-[#00FF87]">transparent pricing</span>
           </h2>
-          <p className="text-[#A2B1BC] text-sm sm:text-base max-w-2xl mx-auto mt-4 font-light">
-            You deal straight with the two founders. No sales reps, no endless junior handoffs. Pick a package or request a custom scope.
+          <p className="text-[#9FAEC0] text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+            Branding, websites, content creation &amp; digital growth solutions tailored for your business.
           </p>
         </FadeIn>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        {/* 4 Plans Grid matching reference screenshot */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {PRICING_PLANS.map((plan, index) => (
-            <FadeIn key={plan.id} delay={index * 0.1} y={30} className="h-full">
+            <FadeIn key={plan.id} delay={index * 0.08} y={30} className="h-full">
               <div
-                className={`h-full rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 relative ${
-                  plan.highlight
-                    ? 'bg-[#14151B] border-2 border-[#B600A8] shadow-[0_0_40px_rgba(182,0,168,0.25)]'
+                className={`h-full rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 relative ${
+                  plan.isPopular
+                    ? 'bg-[#12141A] border-2 border-[#00FF87] shadow-[0_0_35px_rgba(0,255,135,0.18)]'
                     : 'bg-[#111216] border border-[#232630] hover:border-[#383C49]'
                 }`}
               >
-                {plan.badge && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-[#B600A8] to-[#7621B0] text-white text-xs font-semibold uppercase tracking-wider shadow-md flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>{plan.badge}</span>
+                {/* Most Popular Badge on highlighted card */}
+                {plan.isPopular && (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-0.5 rounded-full bg-[#00FF87] text-[#0C0C0C] text-[11px] font-bold uppercase tracking-wider shadow-md">
+                    MOST POPULAR
                   </div>
                 )}
 
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-wide text-white mb-2">
+                  {/* Plan Name */}
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
                     {plan.name}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#8E9CA8] font-light leading-snug mb-6">
+
+                  {/* Plan Price in INR (₹) */}
+                  <div className="flex items-baseline gap-1.5 mb-2">
+                    <span className="text-xl sm:text-2xl md:text-[25px] font-black text-[#00FF87] tracking-tight font-sans">
+                      {plan.price}
+                    </span>
+                    {plan.period && (
+                      <span className="text-xs sm:text-sm text-[#00FF87]/80 font-medium">
+                        {plan.period}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Plan Tagline */}
+                  <p className="text-xs sm:text-[13px] text-[#8E9CA8] leading-relaxed mb-6">
                     {plan.tagline}
                   </p>
 
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                      {plan.price}
-                    </span>
-                    <span className="text-xs uppercase text-[#8E9CA8] tracking-widest font-mono">
-                      / project
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-xs text-[#00FF87] font-mono mb-8">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{plan.duration}</span>
-                  </div>
-
-                  <div className="space-y-3 pt-6 border-t border-[#232630] mb-8">
-                    <span className="text-xs uppercase tracking-wider text-[#BBCCD7] font-mono block mb-2">
-                      What&apos;s Included:
-                    </span>
-                    {plan.deliverables.map((item, idx) => (
-                      <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#D7E2EA]/90 font-light">
-                        <div className="w-4 h-4 rounded-full bg-[#1F222B] flex items-center justify-center shrink-0 mt-0.5 text-[#00FF87]">
-                          <Check className="w-3 h-3" />
-                        </div>
-                        <span>{item}</span>
+                  {/* Features List */}
+                  <div className="space-y-3 pt-5 border-t border-[#232630]/70 mb-8">
+                    {plan.features.map((feature, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-start gap-2.5 text-xs sm:text-[13px] text-[#D7E2EA]/90 leading-snug"
+                      >
+                        <Check className="w-4 h-4 text-[#00FF87] shrink-0 mt-0.5" />
+                        <span>{feature}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <motion.button
-                  type="button"
-                  onClick={() => onSelectPlan(plan.name)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`w-full py-3.5 px-6 rounded-full font-semibold uppercase text-xs sm:text-sm tracking-widest flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                    plan.highlight
-                      ? 'bg-gradient-to-r from-[#B600A8] to-[#7621B0] text-white hover:shadow-[0_0_20px_rgba(182,0,168,0.5)]'
-                      : 'bg-[#1F222B] text-[#D7E2EA] hover:bg-[#2A2E3B]'
-                  }`}
-                >
-                  <span>Select Package</span>
-                  <ArrowRight className="w-4 h-4" />
-                </motion.button>
+                {/* Bottom CTA Button */}
+                <div className="pt-2">
+                  {plan.isPopular ? (
+                    <motion.button
+                      type="button"
+                      onClick={() => onSelectPlan(plan.name)}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full py-3 px-6 rounded-full bg-[#00FF87] hover:bg-[#00e676] text-[#0C0C0C] font-bold text-xs sm:text-sm tracking-wide shadow-[0_4px_20px_rgba(0,255,135,0.35)] transition-all cursor-pointer text-center"
+                    >
+                      Book a call
+                    </motion.button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => onSelectPlan(plan.name)}
+                      className="w-full py-2.5 text-xs sm:text-sm font-medium text-[#00FF87] hover:text-white transition-colors cursor-pointer text-center flex items-center justify-center"
+                    >
+                      <span>Book a call</span>
+                    </button>
+                  )}
+                </div>
               </div>
             </FadeIn>
           ))}

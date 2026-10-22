@@ -39,14 +39,15 @@ export const PortfolioGalleryModal: React.FC<PortfolioGalleryModalProps> = ({
           {/* Header Bar */}
           <div className="flex items-center justify-between p-5 sm:p-6 border-b border-[#232630] bg-[#14151B]">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-sm px-2.5 py-1 rounded-md bg-[#21242E] text-[#B600A8] font-bold">
+              <span className="font-mono text-sm px-2.5 py-1 rounded-md bg-[#21242E] text-[#EF4444] font-bold">
                 {project.id}
               </span>
               <div>
                 <h3 className="text-lg sm:text-xl font-bold uppercase tracking-wide text-white">
                   {project.name}
                 </h3>
-                <span className="text-xs text-[#8E9CA8] uppercase tracking-wider font-mono">
+                <span className="text-xs text-[#0284C7] uppercase tracking-wider font-mono font-medium flex items-center gap-1.5 mt-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]" />
                   {project.category} • {project.type}
                 </span>
               </div>
@@ -66,8 +67,8 @@ export const PortfolioGalleryModal: React.FC<PortfolioGalleryModalProps> = ({
             {/* Overview Banner */}
             <div className="p-4 sm:p-6 rounded-2xl bg-[#16171E] border border-[#262832] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <div className="flex items-center gap-2 text-xs font-mono text-[#00FF87] mb-1">
-                  <Sparkles className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-2 text-xs font-mono text-[#0284C7] font-semibold mb-1">
+                  <span className="w-2 h-2 rounded-full bg-[#EF4444]" />
                   <span>coBinary Production Spotlight</span>
                 </div>
                 <p className="text-sm sm:text-base text-[#D7E2EA] font-light max-w-2xl leading-relaxed">
@@ -81,9 +82,10 @@ export const PortfolioGalleryModal: React.FC<PortfolioGalleryModalProps> = ({
                   onClose();
                   onContactProject(`Similar to ${project.name}`);
                 }}
-                className="shrink-0 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#B600A8] to-[#7621B0] text-xs uppercase tracking-widest font-semibold hover:opacity-90 transition-opacity cursor-pointer flex items-center gap-1.5"
+                className="shrink-0 px-6 py-3 rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs uppercase tracking-wider font-bold transition-all shadow-[0_4px_20px_rgba(2,132,199,0.35)] cursor-pointer flex items-center gap-2 active:scale-95"
               >
                 <span>Request Similar Project</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]" />
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>

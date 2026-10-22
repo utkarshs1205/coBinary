@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
-import { LiveProjectButton } from './LiveProjectButton';
+import React, { useMemo } from 'react';
 import { FadeIn } from './FadeIn';
+import { InfiniteSpiral, SpiralItem } from './InfiniteSpiral';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
 export interface ProjectItem {
   id: string;
@@ -59,151 +59,168 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
 ];
 
-interface CardProps {
-  project: ProjectItem;
-  index: number;
-  totalCards: number;
-  progress: MotionValue<number>;
-  range: [number, number];
-  targetScale: number;
-  onOpenProject: (project: ProjectItem) => void;
-}
-
-const ProjectCard: React.FC<CardProps> = ({
-  project,
-  index,
-  progress,
-  range,
-  targetScale,
-  onOpenProject,
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scale = useTransform(progress, range, [1, targetScale]);
-
-  return (
-    <div
-      ref={containerRef}
-      className="h-[85vh] flex items-start justify-center sticky top-24 md:top-32"
-    >
-      <motion.div
-        style={{
-          scale,
-          top: `calc(${index * 28}px)`,
-        }}
-        className="relative w-full max-w-6xl rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:p-6 md:p-8 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.9)] will-change-transform"
-      >
-        {/* Top Row: Number, Category label, Project name, Live Project button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#D7E2EA]/20">
-          <div className="flex items-baseline gap-4 sm:gap-6">
-            <span className="font-black text-[#D7E2EA] leading-none text-[clamp(2.5rem,7vw,110px)] select-none">
-              {project.id}
-            </span>
-            <div className="flex flex-col">
-              <span className="text-xs uppercase tracking-widest text-[#B600A8] font-mono">
-                {project.category}
-              </span>
-              <h3 className="font-bold uppercase tracking-tight text-[#D7E2EA] text-xl sm:text-2xl md:text-3xl">
-                {project.name}
-              </h3>
-            </div>
-          </div>
-
-          <LiveProjectButton onClick={() => onOpenProject(project)} />
-        </div>
-
-        {/* Bottom Row: Two-column image grid (40% left, 60% right) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 pt-6 flex-1 items-stretch">
-          {/* Left Column (40% / 5 cols) - 2 stacked images */}
-          <div className="md:col-span-5 flex flex-col gap-4 justify-between">
-            {/* Left Top Image */}
-            <div className="w-full h-[clamp(130px,16vw,230px)] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden bg-[#16171B] border border-[#23262E] relative group">
-              <img
-                src={project.col1Img1}
-                alt={`${project.name} preview 1`}
-                loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-
-            {/* Left Bottom Image */}
-            <div className="w-full h-[clamp(160px,22vw,340px)] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden bg-[#16171B] border border-[#23262E] relative group">
-              <img
-                src={project.col1Img2}
-                alt={`${project.name} preview 2`}
-                loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-          </div>
-
-          {/* Right Column (60% / 7 cols) - 1 tall image */}
-          <div className="md:col-span-7 h-full min-h-[300px] sm:min-h-[380px] md:min-h-[460px] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden bg-[#16171B] border border-[#23262E] relative group">
-            <img
-              src={project.col2Img}
-              alt={`${project.name} preview main`}
-              loading="lazy"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            {/* Subtle overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 sm:p-8">
-              <p className="text-sm sm:text-base text-white/90 font-light max-w-md">
-                {project.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-};
-
 interface ProjectsSectionProps {
   onOpenProject: (project: ProjectItem) => void;
+  onNavigateProjects?: () => void;
 }
 
-export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenProject }) => {
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const totalCards = PROJECTS_DATA.length;
+export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
+  onOpenProject,
+  onNavigateProjects,
+}) => {
+  const spiralItems: SpiralItem[] = useMemo(() => {
+    return [
+      {
+        id: 'sec-nextlevel-hero',
+        src: PROJECTS_DATA[0].col2Img,
+        alt: 'Nextlevel Studio 3D Identity',
+        title: PROJECTS_DATA[0].name,
+        category: PROJECTS_DATA[0].category,
+        type: PROJECTS_DATA[0].type,
+        description: PROJECTS_DATA[0].description,
+        projectData: PROJECTS_DATA[0],
+      },
+      {
+        id: 'sec-aura-hero',
+        src: PROJECTS_DATA[1].col2Img,
+        alt: 'Aura Brand Identity Visuals',
+        title: PROJECTS_DATA[1].name,
+        category: PROJECTS_DATA[1].category,
+        type: PROJECTS_DATA[1].type,
+        description: PROJECTS_DATA[1].description,
+        projectData: PROJECTS_DATA[1],
+      },
+      {
+        id: 'sec-solaris-hero',
+        src: PROJECTS_DATA[2].col2Img,
+        alt: 'Solaris Digital Platform',
+        title: PROJECTS_DATA[2].name,
+        category: PROJECTS_DATA[2].category,
+        type: PROJECTS_DATA[2].type,
+        description: PROJECTS_DATA[2].description,
+        projectData: PROJECTS_DATA[2],
+      },
+      {
+        id: 'sec-nextlevel-app',
+        src: PROJECTS_DATA[0].col1Img1,
+        alt: 'Nextlevel Studio Mockup',
+        title: 'Nextlevel Interactive',
+        category: 'Client',
+        type: 'Digital Showcase & Packaging',
+        projectData: PROJECTS_DATA[0],
+      },
+      {
+        id: 'sec-aura-render',
+        src: PROJECTS_DATA[1].col1Img1,
+        alt: 'Aura Holographic World',
+        title: 'Aura Kinetic Motion',
+        category: 'Personal',
+        type: 'Generative Shaders & Spatial 3D',
+        projectData: PROJECTS_DATA[1],
+      },
+      {
+        id: 'sec-solaris-mobile',
+        src: PROJECTS_DATA[2].col1Img1,
+        alt: 'Solaris Mobile App UI',
+        title: 'Solaris Mobile',
+        category: 'Client',
+        type: 'Native iOS & Android Architecture',
+        projectData: PROJECTS_DATA[2],
+      },
+      {
+        id: 'sec-nextlevel-stage',
+        src: PROJECTS_DATA[0].col1Img2,
+        alt: 'Nextlevel Studio Branding',
+        title: 'Nextlevel Brand Kit',
+        category: 'Client',
+        type: 'Identity Guidelines & Print',
+        projectData: PROJECTS_DATA[0],
+      },
+      {
+        id: 'sec-aura-type',
+        src: PROJECTS_DATA[1].col1Img2,
+        alt: 'Aura Kinetic Typography',
+        title: 'Aura Spatial Typo',
+        category: 'Personal',
+        type: '3D Kinetic Editorial',
+        projectData: PROJECTS_DATA[1],
+      },
+      {
+        id: 'sec-solaris-analytics',
+        src: PROJECTS_DATA[2].col1Img2,
+        alt: 'Solaris Analytics Dashboard',
+        title: 'Solaris Analytics',
+        category: 'Client',
+        type: 'Realtime Data Visualization',
+        projectData: PROJECTS_DATA[2],
+      },
+    ];
+  }, []);
 
   return (
     <section
       id="projects"
-      ref={containerRef}
-      className="bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 relative z-30 pt-20 pb-32 px-5 sm:px-8 md:px-10"
+      className="w-full relative z-30 py-20 sm:py-28 px-5 sm:px-8 md:px-12 bg-white border-t border-sky-100 text-slate-800"
     >
-      {/* Heading: Project */}
-      <FadeIn delay={0} y={40} className="w-full mb-16 sm:mb-20">
-        <h2 className="hero-heading font-black uppercase text-center leading-none tracking-tight text-[clamp(3rem,12vw,160px)]">
-          Project
-        </h2>
-      </FadeIn>
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+          <FadeIn delay={0.05} y={20}>
+            <span className="text-xs font-mono uppercase tracking-widest text-[#0284C7] font-semibold flex items-center justify-center gap-1.5 mb-2.5">
+              <span className="w-2 h-2 rounded-full bg-[#EF4444]" />
+              Portfolio &amp; Selected Works
+            </span>
+            <div className="mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight inline-block border-b-[3.5px] border-[#EF4444] pb-1">
+                Featured Projects
+              </h2>
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.12} y={20}>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-md mx-auto">
+              Hover over the center card to inspect project link.
+            </p>
+          </FadeIn>
+        </div>
 
-      {/* 3 Stacking Cards */}
-      <div className="relative">
-        {PROJECTS_DATA.map((project, index) => {
-          // targetScale = 1 - (totalCards - 1 - index) * 0.03
-          const targetScale = 1 - (totalCards - 1 - index) * 0.03;
-          const start = index / totalCards;
-          const end = 1;
+        {/* Infinite Spiral Helix Showcase */}
+        <div className="w-full h-[580px] sm:h-[640px] relative rounded-3xl bg-gradient-to-b from-sky-50/50 via-white to-sky-50/30 border border-sky-100 shadow-[0_20px_50px_rgba(2,132,199,0.07)] overflow-hidden">
+          <InfiniteSpiral
+            items={spiralItems}
+            animationMode="all"
+            speed={0.55}
+            radius={265}
+            cardWidth={230}
+            cardHeight={155}
+            verticalSpacing={84}
+            perspective={850}
+            cardRadius={16}
+            centerScale={1.12}
+            edgeBlur={5}
+            cardsPerTurn={10}
+            pauseOnHover={true}
+            edgeFade={0.65}
+            grayscale={0}
+            onItemClick={(item) => {
+              if (item.projectData) onOpenProject(item.projectData);
+            }}
+          />
+        </div>
 
-          return (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              totalCards={totalCards}
-              progress={scrollYProgress}
-              range={[start, end]}
-              targetScale={targetScale}
-              onOpenProject={onOpenProject}
-            />
-          );
-        })}
+        {/* View All Projects CTA */}
+        {onNavigateProjects && (
+          <div className="mt-10 text-center">
+            <button
+              type="button"
+              onClick={onNavigateProjects}
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white text-sm font-bold tracking-wide transition-all shadow-[0_6px_25px_rgba(2,132,199,0.25)] hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              <span>Explore All Projects</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]" />
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

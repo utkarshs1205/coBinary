@@ -67,7 +67,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
         {/* Heading: "About me" */}
         <FadeIn delay={0} y={40} className="w-full">
           <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center text-[clamp(3rem,12vw,160px)]">
-            About me
+            About us
           </h2>
         </FadeIn>
 
@@ -75,7 +75,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
         <div className="h-10 sm:h-14 md:h-16" />
 
         {/* Character-by-character animated paragraph */}
-        <AnimatedText text="With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!" />
+        <AnimatedText text="With more than 3 years of experience in design, We focus on branding, web design, and user experience, We truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!" />
 
         {/* Gap between text block and button: gap-16 sm:gap-20 md:gap-24 */}
         <div className="h-16 sm:h-20 md:h-24" />

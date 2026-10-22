@@ -212,10 +212,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService =
                           onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                           className="w-full bg-[#1B1D23] border border-[#2A2E3A] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#B600A8] transition-colors"
                         >
-                          <option value="$2,000 - $5,000">$2,000 - $5,000</option>
-                          <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                          <option value="$10,000 - $25,000">$10,000 - $25,000</option>
-                          <option value="$25,000+">$25,000+ (Retainer / Ecosystem)</option>
+                          <option value="₹10,000 - ₹25,000">₹10,000 – ₹25,000</option>
+                          <option value="₹25,000 - ₹50,000">₹25,000 – ₹50,000</option>
+                          <option value="₹50,000 - ₹1,00,000">₹50,000 – ₹1,00,000</option>
+                          <option value="₹1,00,000+">₹1,00,000+ (Full Ecosystem / Retainer)</option>
                         </select>
                       </div>
                     </div>

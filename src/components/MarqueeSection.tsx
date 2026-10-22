@@ -62,27 +62,27 @@ export const MarqueeSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden relative select-none"
+      id="concepts"
+      className="bg-[#0C0C0C] pt-14 sm:pt-24 md:pt-36 pb-8 sm:pb-12 overflow-hidden relative select-none"
     >
-      {/* Subtle section header */}
-      <div className="max-w-7xl mx-auto px-6 mb-8 flex justify-between items-end text-xs uppercase tracking-widest text-[#7E8B95]">
-        <span>Recent 3D, CGI & Motion Archive</span>
-        <span>Curated Works ({ALL_GIF_URLS.length})</span>
+      {/* Clean section header without buttons or pills */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-5 sm:mb-8 text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#A2B1BC] font-medium">
+        <span>Ideas For Your Next Site</span>
       </div>
 
-      <div className="flex flex-col gap-3 w-full">
+      <div className="flex flex-col gap-2.5 sm:gap-3 w-full">
         {/* Row 1: moves RIGHT on scroll */}
         <div
           style={{
             transform: row1Transform,
             willChange: 'transform',
           }}
-          className="flex gap-3 transition-transform duration-75 ease-out whitespace-nowrap"
+          className="flex gap-2.5 sm:gap-3 transition-transform duration-75 ease-out whitespace-nowrap"
         >
           {ROW_1_IMAGES.map((url, i) => (
             <div
               key={`row1-${i}`}
-              className="w-[420px] h-[270px] shrink-0 rounded-2xl overflow-hidden bg-[#16171B] border border-[#23262E]/60 shadow-lg relative group"
+              className="w-[280px] xs:w-[320px] sm:w-[380px] md:w-[420px] h-[180px] xs:h-[205px] sm:h-[245px] md:h-[270px] shrink-0 rounded-xl sm:rounded-2xl overflow-hidden bg-[#16171B] border border-[#23262E]/60 shadow-lg relative group"
             >
               <img
                 src={url}
@@ -101,12 +101,12 @@ export const MarqueeSection: React.FC = () => {
             transform: row2Transform,
             willChange: 'transform',
           }}
-          className="flex gap-3 transition-transform duration-75 ease-out whitespace-nowrap"
+          className="flex gap-2.5 sm:gap-3 transition-transform duration-75 ease-out whitespace-nowrap"
         >
           {ROW_2_IMAGES.map((url, i) => (
             <div
               key={`row2-${i}`}
-              className="w-[420px] h-[270px] shrink-0 rounded-2xl overflow-hidden bg-[#16171B] border border-[#23262E]/60 shadow-lg relative group"
+              className="w-[280px] xs:w-[320px] sm:w-[380px] md:w-[420px] h-[180px] xs:h-[205px] sm:h-[245px] md:h-[270px] shrink-0 rounded-xl sm:rounded-2xl overflow-hidden bg-[#16171B] border border-[#23262E]/60 shadow-lg relative group"
             >
               <img
                 src={url}
