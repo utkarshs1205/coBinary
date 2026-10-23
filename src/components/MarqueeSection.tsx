@@ -63,26 +63,32 @@ export const MarqueeSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="concepts"
-      className="bg-[#0C0C0C] pt-14 sm:pt-24 md:pt-36 pb-8 sm:pb-12 overflow-hidden relative select-none"
+      className="bg-slate-50/60 pt-14 sm:pt-20 md:pt-24 pb-12 sm:pb-16 overflow-hidden relative select-none border-y border-sky-100"
     >
-      {/* Clean section header without buttons or pills */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-5 sm:mb-8 text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#A2B1BC] font-medium">
-        <span>Ideas For Your Next Site</span>
+      {/* Clean section header with red dot */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-6 sm:mb-8 flex items-center justify-between">
+        <div className="text-xs sm:text-sm uppercase tracking-[0.22em] text-[#0284C7] font-semibold flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#EF4444]" />
+          <span>Ideas For Your Next Digital Platform</span>
+        </div>
+        <span className="text-xs font-mono text-slate-400 hidden sm:inline-block">
+          Scroll to explore
+        </span>
       </div>
 
-      <div className="flex flex-col gap-2.5 sm:gap-3 w-full">
+      <div className="flex flex-col gap-3 sm:gap-4 w-full">
         {/* Row 1: moves RIGHT on scroll */}
         <div
           style={{
             transform: row1Transform,
             willChange: 'transform',
           }}
-          className="flex gap-2.5 sm:gap-3 transition-transform duration-75 ease-out whitespace-nowrap"
+          className="flex gap-3 sm:gap-4 transition-transform duration-75 ease-out whitespace-nowrap"
         >
           {ROW_1_IMAGES.map((url, i) => (
             <div
               key={`row1-${i}`}
-              className="w-[280px] xs:w-[320px] sm:w-[380px] md:w-[420px] h-[180px] xs:h-[205px] sm:h-[245px] md:h-[270px] shrink-0 rounded-xl sm:rounded-2xl overflow-hidden bg-[#16171B] border border-[#23262E]/60 shadow-lg relative group"
+              className="w-[280px] xs:w-[320px] sm:w-[380px] md:w-[420px] h-[180px] xs:h-[205px] sm:h-[245px] md:h-[270px] shrink-0 rounded-2xl overflow-hidden bg-white border border-sky-100 shadow-[0_4px_20px_rgba(2,132,199,0.08)] relative group transition-all duration-300 hover:border-sky-300"
             >
               <img
                 src={url}
@@ -90,7 +96,7 @@ export const MarqueeSection: React.FC = () => {
                 loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </div>
           ))}
         </div>
@@ -101,12 +107,12 @@ export const MarqueeSection: React.FC = () => {
             transform: row2Transform,
             willChange: 'transform',
           }}
-          className="flex gap-2.5 sm:gap-3 transition-transform duration-75 ease-out whitespace-nowrap"
+          className="flex gap-3 sm:gap-4 transition-transform duration-75 ease-out whitespace-nowrap"
         >
           {ROW_2_IMAGES.map((url, i) => (
             <div
               key={`row2-${i}`}
-              className="w-[280px] xs:w-[320px] sm:w-[380px] md:w-[420px] h-[180px] xs:h-[205px] sm:h-[245px] md:h-[270px] shrink-0 rounded-xl sm:rounded-2xl overflow-hidden bg-[#16171B] border border-[#23262E]/60 shadow-lg relative group"
+              className="w-[280px] xs:w-[320px] sm:w-[380px] md:w-[420px] h-[180px] xs:h-[205px] sm:h-[245px] md:h-[270px] shrink-0 rounded-2xl overflow-hidden bg-white border border-sky-100 shadow-[0_4px_20px_rgba(2,132,199,0.08)] relative group transition-all duration-300 hover:border-sky-300"
             >
               <img
                 src={url}
@@ -114,7 +120,7 @@ export const MarqueeSection: React.FC = () => {
                 loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </div>
           ))}
         </div>

@@ -10,9 +10,10 @@ import { ProjectsSection, ProjectItem } from './components/ProjectsSection';
 import { ServicesPage } from './pages/ServicesPage';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { TeamsPage } from './pages/TeamsPage';
+import { ReviewsPage } from './pages/ReviewsPage';
 import { StartBuildingPage } from './pages/StartBuildingPage';
 
-type PageRoute = 'home' | 'services' | 'projects' | 'teams' | 'start-building';
+type PageRoute = 'home' | 'services' | 'projects' | 'teams' | 'reviews' | 'start-building';
 
 export default function App() {
   const [selectedPlan, setSelectedPlan] = useState<string>('');
@@ -26,6 +27,7 @@ export default function App() {
     if (path.includes('services')) return 'services';
     if (path.includes('projects') || path.includes('portfolio')) return 'projects';
     if (path.includes('team')) return 'teams';
+    if (path.includes('reviews') || path.includes('testimonial')) return 'reviews';
     return 'home';
   };
 
@@ -80,6 +82,13 @@ export default function App() {
     if (target === 'teams' || target === 'team') {
       setCurrentPage('teams');
       window.history.pushState({}, '', '/teams');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (target === 'reviews' || target === 'review') {
+      setCurrentPage('reviews');
+      window.history.pushState({}, '', '/reviews');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -186,9 +195,27 @@ export default function App() {
     );
   }
 
-  // 5. Render Home Page (Cleaned: Contact form removed, redirects to /start-building)
+  // 5. Render Dedicated Reviews Page
+  if (currentPage === 'reviews') {
+    return (
+      <>
+        <ReviewsPage
+          onOpenContact={(plan) => handleOpenContact(plan || '')}
+          onNavigate={handleNavigate}
+        />
+
+        <PortfolioGalleryModal
+          project={activeProject}
+          onClose={handleCloseProject}
+          onContactProject={(projectName) => handleOpenContact(projectName)}
+        />
+      </>
+    );
+  }
+
+  // 6. Render Home Page
   return (
-    <div className="bg-[#0C0C0C] text-[#D7E2EA] min-h-screen w-full relative overflow-x-clip font-sans antialiased selection:bg-[#B600A8] selection:text-white">
+    <div className="bg-white text-slate-800 min-h-screen w-full relative overflow-x-clip font-sans antialiased selection:bg-sky-500 selection:text-white">
       {/* 1. Hero Section (with embedded navbar) */}
       <HeroSection
         onOpenContact={() => handleOpenContact()}
@@ -207,11 +234,14 @@ export default function App() {
         onNavigateProjects={() => handleNavigate('projects')}
       />
 
-      {/* 4. Pricing Section (Nav link "Price") in INR */}
+      {/* 4. Pricing Section (Nav link "Price") with custom milestone pricing */}
       <PricingSection onSelectPlan={(plan) => handleOpenContact(plan)} />
 
-      {/* 5. Reviews & Client Proof Section */}
-      <ReviewsSection />
+      {/* 5. Reviews & Client Proof Section matching reference */}
+      <ReviewsSection
+        onNavigateReviews={() => handleNavigate('reviews')}
+        onOpenSubmitReview={() => handleNavigate('reviews')}
+      />
 
       {/* 6. Footer */}
       <Footer

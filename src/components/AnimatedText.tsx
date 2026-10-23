@@ -44,7 +44,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
   return (
     <p
       ref={containerRef}
-      className={`text-[#D7E2EA] font-medium text-center leading-relaxed max-w-[560px] text-[clamp(1rem,2vw,1.35rem)] ${className}`}
+      className={`text-slate-700 font-medium text-center leading-relaxed max-w-[560px] text-[clamp(1rem,2vw,1.35rem)] ${className}`}
     >
       {characters.map((char, index) => {
         const start = index / total;

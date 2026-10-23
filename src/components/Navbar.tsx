@@ -5,7 +5,7 @@ import { Box, Layers, FileText, Tag, Clock, ArrowRight, Menu, X, Users } from 'l
 interface NavbarProps {
   onOpenContact: () => void;
   onNavigate: (sectionId: string) => void;
-  activePage?: 'home' | 'services' | 'projects' | 'teams';
+  activePage?: 'home' | 'services' | 'projects' | 'teams' | 'reviews';
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenContact, onNavigate, activePage = 'home' }) => {
@@ -52,13 +52,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact, onNavigate, activ
           onClick={() => onNavigate('home')}
           className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group"
         >
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-[#B600A8] via-[#7621B0] to-white/20 p-[1px] shadow-lg group-hover:shadow-[#B600A8]/40 transition-shadow">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-[#0284C7] via-[#38BDF8] to-[#EF4444] p-[1px] shadow-lg group-hover:shadow-[#0284C7]/40 transition-shadow">
             <div className="w-full h-full bg-[#0C0C0C] rounded-[10px] flex items-center justify-center">
               <div className="grid grid-cols-2 gap-[2px] w-3 h-3 group-hover:rotate-45 transition-transform duration-300">
-                <div className="bg-[#D7E2EA] rounded-[1px] w-[5px] h-[5px]" />
-                <div className="bg-[#B600A8] rounded-[1px] w-[5px] h-[5px]" />
-                <div className="bg-[#7621B0] rounded-[1px] w-[5px] h-[5px]" />
-                <div className="bg-[#D7E2EA] rounded-[1px] w-[5px] h-[5px]" />
+                <div className="bg-[#38BDF8] rounded-[1px] w-[5px] h-[5px]" />
+                <div className="bg-[#EF4444] rounded-[1px] w-[5px] h-[5px]" />
+                <div className="bg-[#0284C7] rounded-[1px] w-[5px] h-[5px]" />
+                <div className="bg-white rounded-[1px] w-[5px] h-[5px]" />
               </div>
             </div>
           </div>
